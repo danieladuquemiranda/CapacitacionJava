@@ -1,10 +1,16 @@
 package clases;
 
-public class CapacidadEndedudamiento {
+public class CapacidadEndeudamiento {
     private int ingresosTotales;
     private int gastosFijos;
     private int gastosVariables;
     private final double POR_FIJO = 0.35;
+
+    public CapacidadEndeudamiento(int ingresosTotales, int gastosFijos, int gastosVariables){
+        this.ingresosTotales = ingresosTotales;
+        this.gastosFijos = gastosFijos;
+        this.gastosVariables = gastosVariables;
+    }
 
     //Metodos getter and setter para la clase
     public int getIngresosTotales() {
@@ -32,8 +38,7 @@ public class CapacidadEndedudamiento {
     }
 
 
-    public String getCapacidadEndeudamiento(int ingresosTotales, int gastosFijos, int gastosVariables ){
-        double capacidadDeEndeudamiento = (ingresosTotales - gastosFijos - gastosVariables) * POR_FIJO;
-        return "La capacidad de endeudamiento es: "+ capacidadDeEndeudamiento;
+    public double getCapacidadEndeudamiento(){
+        return  (ingresosTotales - gastosFijos - gastosVariables) * POR_FIJO;
     }
 }

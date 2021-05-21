@@ -1,41 +1,49 @@
 package com.company;
-import clases.CapacidadEndedudamiento;
+import clases.CapacidadEndeudamiento;
 import clases.MensajesAutomaticos;
 
 import java.util.Scanner;
 
 public class Main {
+    private static String entradaWhile = "SI";
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        CapacidadEndedudamiento capacidadEndeudamientoObject = new CapacidadEndedudamiento();
-        MensajesAutomaticos mesajesAutomaticosObject = new MensajesAutomaticos();
 
-        Scanner scanner = new Scanner(System.in);
+        try {
 
-        String entradaWhile = "NO";
-        while (entradaWhile.equals("NO")){
-            System.out.println(mesajesAutomaticosObject.getBIENVENIDA());
-            System.out.println(mesajesAutomaticosObject.getGANANCIAS_TOTALES());
-            capacidadEndeudamientoObject.setIngresosTotales(scanner.nextInt());
+            while (entradaWhile.equalsIgnoreCase("SI")) {
+                System.out.println(MensajesAutomaticos.BIENVENIDA);
 
-            System.out.println(mesajesAutomaticosObject.getGASTOS_FIJOS());
-            capacidadEndeudamientoObject.setGastosFijos(scanner.nextInt());
+                int gananciasTotales = getEnteroConsola(MensajesAutomaticos.GANANCIAS_TOTALES);
+                int gastosFijos = getEnteroConsola(MensajesAutomaticos.GASTOS_FIJOS);
+                int gastosVariables = getEnteroConsola(MensajesAutomaticos.GASTOS_VARIABLES);
 
-            System.out.println(mesajesAutomaticosObject.getGASTOS_VARIABLES());
-            capacidadEndeudamientoObject.setGastosVariables(scanner.nextInt());
+                CapacidadEndeudamiento capacidadEndeudamientoObject = new CapacidadEndeudamiento(gananciasTotales,gastosFijos,gastosVariables);
+                System.out.println(MensajesAutomaticos.CAPACIDAD + capacidadEndeudamientoObject.getCapacidadEndeudamiento());
 
-            System.out.println(capacidadEndeudamientoObject.getCapacidadEndeudamiento(
-                    capacidadEndeudamientoObject.getIngresosTotales(),
-                    capacidadEndeudamientoObject.getGastosFijos(),
-                    capacidadEndeudamientoObject.getGastosVariables(),
-                    capacidadEndeudamientoObject.getPOR_FIJO())
-            );
-            System.out.println(mesajesAutomaticosObject.getCONDICIONAL_SALIDA());
-            entradaWhile = scanner.next();
-            if( entradaWhile.equals("SI")){
-                System.out.println(mesajesAutomaticosObject.getGRACIAS());
+                System.out.println(MensajesAutomaticos.CONDICIONAL_SALIDA);
+                entradaWhile = scanner.next();
+                if (entradaWhile.equalsIgnoreCase("NO")) {
+                    System.out.println(MensajesAutomaticos.GRACIAS);
+                }
             }
+        } catch (Exception e){
+            System.out.println(MensajesAutomaticos.GRACIAS);
         }
-
     }
 
+    public static int getEnteroConsola(String cadena) throws Exception {
+        System.out.println(cadena);
+        while (!entradaWhile.equalsIgnoreCase("NO")){
+            entradaWhile = scanner.next();
+            try{
+                return Integer.parseInt(entradaWhile);
+            }catch(Exception e){
+                if (!entradaWhile.equalsIgnoreCase("NO")){
+                    System.out.println(MensajesAutomaticos.REPETIR_CICLO);
+                }
+            }
+        }
+        throw new Exception();
+    }
 }
